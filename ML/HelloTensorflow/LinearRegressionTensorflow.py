@@ -7,7 +7,6 @@ print("Hello, linear regression in tensorflow")
 x = np.array([1, 2, 3, 4, 5, 6]).reshape((-1, 1))
 y = np.array([3, 4, 6, 7, 8, 19])
 
-
 # Define the model inputs and outputs
 inputs = tf.keras.layers.Input(shape=(1,))
 outputs = tf.keras.layers.Dense(units=1)(inputs)
