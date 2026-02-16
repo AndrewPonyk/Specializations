@@ -8,9 +8,10 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+// |su:11 WALLET: Stores your keys. Your public key is your address (share it), private key signs transactions (NEVER share it!)
 public class Wallet {
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
+    private PrivateKey privateKey;  // Keep secret! Anyone with this can spend your coins
+    private PublicKey publicKey;  // This is your wallet address - share to receive coins
     private List<Transaction> transactions;
 
     public Wallet() {
@@ -18,6 +19,7 @@ public class Wallet {
         generateKeyPair();
     }
 
+    // |su:12 KEY GENERATION: Create ECDSA key pair (256-bit). Using BouncyCastle security provider.
     private void generateKeyPair() {
         try {
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDSA", "BC");

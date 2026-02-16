@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// |su:5 BLOCKCHAIN: The ledger. A list of blocks linked by hash, making data tamper-evident.
 public class Blockchain {
-    private List<Block> chain;
-    private Map<String, Float> balances;
-    private int difficulty;
+    private List<Block> chain;  // The actual chain of blocks
+    private Map<String, Float> balances;  // |su:6 STATE: Track wallet balances (in production, compute from UTXOs)
+    private int difficulty;  // Mining difficulty - how many leading zeros required in hash
     private static final float MINING_REWARD = 100f;
 
     public Blockchain(int difficulty) {
@@ -33,17 +34,18 @@ public class Blockchain {
         chain.add(newBlock);
     }
 
+    // |su:7 INTEGRITY: Verify chain hasn't been tampered with. Checks: hash correctness & block linkage
     public boolean isChainValid() {
         for (int i = 1; i < chain.size(); i++) {
             Block currentBlock = chain.get(i);
             Block previousBlock = chain.get(i - 1);
 
             if (!currentBlock.getHash().equals(currentBlock.calculateHash())) {
-                return false;
+                return false;  // Block data was modified
             }
 
             if (!currentBlock.getPreviousHash().equals(previousBlock.getHash())) {
-                return false;
+                return false;  // Chain link broken - block was removed/inserted
             }
         }
         return true;
